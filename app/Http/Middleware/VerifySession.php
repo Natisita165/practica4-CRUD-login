@@ -13,11 +13,13 @@ class VerifySession
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next)
     {
-        if(!$request->session()->exists('data_session')) {
-            return redirect('/');
+        if (!$request->session()->exists('data_session')) {
+            return redirect('/login');
         }
+
         return $next($request);
     }
 }
+

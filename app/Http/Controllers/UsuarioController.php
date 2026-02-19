@@ -11,7 +11,6 @@ class UsuarioController extends Controller
 {
     public function login()
     {
-        echo $password;
         return view('auth.login');
     }
     public function verificarLogin(Request $request)
@@ -44,14 +43,24 @@ class UsuarioController extends Controller
             'email' => 'Las credenciales no son correctas o el usuario está bloqueado.',
         ]);
     }
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-        Session::flush();
+
+        Session::forget('data_session');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect('/login');
     }
+
+    public function verificador()
+    {
+        return view('auth.verificar');
+    }
  
-    public function verificador(){
-        return "Prueba de entrada al sistema";
+    public function dashboard()
+    {
+        return view('dashboard');
     }
 }
